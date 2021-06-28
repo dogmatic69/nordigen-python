@@ -4,15 +4,15 @@ build:
 
 .PHONY: isort
 isort:
-	isort ./nordigen ./tests --check-only
+	isort ./nordigen ./tests ./examples --check-only
 
 .PHONY: black
 black:
-	black --check ./nordigen ./tests
+	black --check ./nordigen ./tests ./examples
 
 .PHONY: flake8
 flake8:
-	flake8 ./nordigen ./tests
+	flake8 ./nordigen ./tests ./examples
 
 .PHONY: test
 test:
@@ -23,8 +23,8 @@ ci: isort black flake8 test
 
 .PHONY: ci-fix
 ci-fix:
-	isort ./nordigen ./tests
-	black ./nordigen ./tests
+	isort ./nordigen ./tests ./examples
+	black ./nordigen ./tests ./examples
 
 .PHONY: dev
 dev:

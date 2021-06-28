@@ -1,7 +1,7 @@
 from nordigen.client import AccountClient, AgreementsClient, AspspsClient, RequisitionsClient
 
 
-def Client(token, request_strategy):
+def Client(token, request_strategy=None):
     def instance():
         return instance
 
