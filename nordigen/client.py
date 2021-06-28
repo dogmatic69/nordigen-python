@@ -136,15 +136,18 @@ class RequisitionsClient(NordigenClient):
         url = self.url(fragment=f'requisitions/{id}')
         return self.delete(url)
 
-    def create(self, redirect, agreements, reference, enduser_id, language):
+    def create(self, redirect, enduser_id, reference, agreements=[], language=None):
         url = self.url(fragment='requisitions')
-        return self.post(url, data={
+        data = {
             "redirect": redirect,
             "agreements": agreements,
             "reference": reference,
             "enduser_id": enduser_id,
-            "user_language": language,
-        })
+        }
+        if language:
+            data["user_language"] = language
+
+        return self.post(url, data=data)
 
     def initiate(self, id, aspsp_id):
         url = self.url(fragment=f'requisitions/{id}/links')

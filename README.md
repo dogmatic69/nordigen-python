@@ -10,6 +10,10 @@ get access to the data.
 
 The client is built using the python [api-client](https://github.com/MikeWooster/api-client) lib.
 
+I found this info thanks to this site: https://www.bankapi.se/
+
+> * According to Nordigen's own website :)
+
 ## Nordigen Info
 
 Sales pitch: https://nordigen.com/en/products/account-information/
