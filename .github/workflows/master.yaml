@@ -1,0 +1,43 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: setup
+        run: make install-dev
+      - name: isort
+        run: make isort
+      - name: black
+        run: make black
+      - name: flake8
+        run: make flake8
+      - name: test
+        run: make test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ci]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: setup
+        run: make install-deploy
+      - name: deploy
+        run: make deploy
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}

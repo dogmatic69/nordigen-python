@@ -1,0 +1,26 @@
+name: Unit Tests
+
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: setup
+        run: make install-dev
+      - name: isort
+        run: make isort
+      - name: black
+        run: make black
+      - name: flake8
+        run: make flake8
+      - name: test
+        run: make test

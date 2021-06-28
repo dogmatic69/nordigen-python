@@ -1,0 +1,6 @@
+*egg*
+client.py
+**/__pycache__
+.coverage
+htmlcov
+dist
