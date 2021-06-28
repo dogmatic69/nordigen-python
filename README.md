@@ -12,13 +12,13 @@ The client is built using the python [api-client](https://github.com/MikeWooster
 
 I found this info thanks to this site: https://www.bankapi.se/
 
-> * According to Nordigen's own website :)
+_\* According to Nordigen's own website :)_
 
 ## Nordigen Info
 
-Sales pitch: https://nordigen.com/en/products/account-information/
-Docs: https://nordigen.com/en/account_information_documenation/api-documention/overview/
-API Spec: https://ob.nordigen.com/api/docs
+- Sales pitch: https://nordigen.com/en/products/account-information/
+- Docs: https://nordigen.com/en/account_information_documenation/api-documention/overview/
+- API Spec: https://ob.nordigen.com/api/docs
 
 ## Installation
 
@@ -27,6 +27,8 @@ pip install nordigen-python
 ```
 
 ## Usage
+
+Some more indepth working examples can be found in `./examples`. Also check out the test cases for usage examples.
 
 Create a client instance
 
