@@ -1,5 +1,10 @@
 # Nordigen API Client
 
+[![GitHub](https://img.shields.io/github/license/dogmatic69/nordigen-python)](LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/dogmatic69/nordigen-python/badge)](https://www.codefactor.io/repository/github/dogmatic69/nordigen-python)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=alert_status)](https://sonarcloud.io/dashboard?id=dogmatic69_nordigen-python)
+[![CI](https://github.com/dogmatic69/nordigen-python/actions/workflows/master.yaml/badge.svg)](https://github.com/dogmatic69/nordigen-python/actions/workflows/master.yaml)
+
 Nordigen is a (always*) free banking API that takes advantage of the EU PSD2
 regulations. They connect to banks in over 30 countries using real banking
 API's (no screen scraping).
@@ -28,7 +33,7 @@ pip install nordigen-python
 
 ## Usage
 
-Some more indepth working examples can be found in `./examples`. Also check out the test cases for usage examples.
+Some more in-depth working examples can be found in `./examples`. Also check out the test cases for usage examples.
 
 Create a client instance
 
