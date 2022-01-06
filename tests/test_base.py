@@ -1,12 +1,15 @@
 import unittest
 
-from nordigen.client import NordigenClient as Client
-from nordigen.client import next_page_by_url
+from apiclient import HeaderAuthentication
+
+from nordigen.client import NordigenClient, next_page_by_url
+
+header_auth = HeaderAuthentication(scheme="Token", token="fizz-buzz")
 
 
 class TestBaseAuth(unittest.TestCase):
-    def test_token(self):
-        client = Client(token="fizz-buzz")
+    def test_token_auth(self):
+        client = NordigenClient(auth=header_auth)
 
         self.assertEqual(
             client.get_default_headers(),
@@ -24,42 +27,42 @@ class TestBasePagination(unittest.TestCase):
 
 class TestBaseUrl(unittest.TestCase):
     def test_url_host(self):
-        client = Client(token="asdf", host="localhost")
+        client = NordigenClient(auth=None, host="localhost")
 
         result = client.url("foo")
-        self.assertEqual(result, "https://localhost/api/foo/")
+        self.assertEqual(result, "https://localhost/api/v2/foo/")
 
     def test_url_scheme(self):
-        client = Client(token="asdf", scheme="http")
+        client = NordigenClient(auth=None, scheme="sftp")
 
         result = client.url("foo")
-        self.assertEqual(result, "http://ob.nordigen.com/api/foo/")
+        self.assertEqual(result, "sftp://ob.nordigen.com/api/v2/foo/")
 
     def test_url_base(self):
-        client = Client(token="asdf", base="")
+        client = NordigenClient(auth=None, base="")
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/foo/")
+        self.assertEqual(result, "https://ob.nordigen.com/v2/foo/")
 
-        client = Client(token="asdf", base="/some/thing/here")
+        client = NordigenClient(auth=None, base="/some/thing/here")
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/some/thing/here/foo/")
+        self.assertEqual(result, "https://ob.nordigen.com/some/thing/here/v2/foo/")
 
     def test_url_basic(self):
-        client = Client(token="asdf")
+        client = NordigenClient(auth=None)
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/api/foo/")
+        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/")
 
         result = client.url("foo/bar")
-        self.assertEqual(result, "https://ob.nordigen.com/api/foo/bar/")
+        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/bar/")
 
     def test_url_args(self):
-        client = Client(token="asdf")
+        client = NordigenClient(auth=None)
 
         result = client.url("foo", url_args={})
-        self.assertEqual(result, "https://ob.nordigen.com/api/foo/")
+        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/")
 
         result = client.url("foo", url_args={"fizz": "buzz"})
-        self.assertEqual(result, "https://ob.nordigen.com/api/foo/?fizz=buzz")
+        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/?fizz=buzz")

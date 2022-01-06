@@ -1,5 +1,6 @@
+.python
 *egg*
-client.py
+examples/client.py
 **/__pycache__
 .coverage
 htmlcov

@@ -1,5 +1,5 @@
 .PHONY: build
-build:
+build: venv
 	python setup.py sdist
 
 .PHONY: isort
@@ -16,13 +16,13 @@ flake8:
 
 .PHONY: test
 test:
-	pytest
+	pytest --ignore=examples/
 
 .PHONY: ci
-ci: isort black flake8 test
+ci: venv isort black flake8 test
 
 .PHONY: ci-fix
-ci-fix:
+ci-fix: venv
 	isort ./nordigen ./tests ./examples
 	black ./nordigen ./tests ./examples
 
@@ -32,7 +32,7 @@ dev:
 	$(MAKE) ci
 
 .PHONY: install-pip
-install-pip:
+install-pip: venv
 	python -m pip install --upgrade pip
 
 .PHONY: install-dev
@@ -47,3 +47,7 @@ install-deploy: install-pip
 deploy: build
 	twine upload --verbose dist/*
 
+.PHONY: venv
+venv:
+	$(shell [ ! -d .python ] && python -m venv .python)
+	. .python/bin/activate
