@@ -24,6 +24,7 @@ _\* According to Nordigen's own website :)_
 - Sales pitch: https://nordigen.com/en/products/account-information/
 - Docs: https://nordigen.com/en/account_information_documenation/api-documention/overview/
 - API Spec: https://ob.nordigen.com/api/docs
+- OpenAPI Specification: https://ob.nordigen.com/api/swagger.json
 
 ## Installation
 
