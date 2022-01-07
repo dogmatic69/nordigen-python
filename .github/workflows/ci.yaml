@@ -11,8 +11,6 @@ on:
 jobs:
   all-tests:
     uses: dogmatic69/nordigen-python/.github/workflows/all-test.yaml@master
-    with:
-      fetch_depth: 0
     secrets:
       github_key: ${{ secrets.GITHUB_TOKEN }}
       sonar_key: ${{ secrets.SONAR_TOKEN }}
@@ -23,7 +21,7 @@ jobs:
     needs:
       - all-tests
     with:
-      python_version: 3.10
+      python_version: '3.10'
     secrets:
       pypi_key: ${{ secrets.PYPI_TOKEN }}
 
