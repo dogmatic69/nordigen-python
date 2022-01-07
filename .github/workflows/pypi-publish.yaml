@@ -22,10 +22,11 @@ jobs:
       local-version: ${{ steps.local-version.outputs.version }}
       remote-version: ${{ steps.remote-version.outputs.version }}
     steps:
+      - uses: actions/checkout@v2
       - id: local-version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: remote-version
-        run: echo "::set-output name=version::$(pip show ${{ inputs.package_name }} | grep Version | awk '{print $2}')"
+        run: echo "::set-output name=version::$(pypi info ${{ inputs.package_name }} | grep Latest | awk '{print $3}')"
       - name: Version Info
         run: |
           echo "Local Version: ${{ steps.local-version.outputs.version }}"
