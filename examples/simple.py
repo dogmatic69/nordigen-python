@@ -1,7 +1,7 @@
 import os
 import pprint
 
-from nordigen import Client
+from nordigen import wrapper as Client
 
 # Minimal example that fetches available banks on the Nordigen platform
 

@@ -7,7 +7,7 @@ from uuid import uuid4 as uuid
 from flask import Flask
 from pyngrok import ngrok
 
-from nordigen import Client
+from nordigen import wrapper as Client
 
 # More complext example that will go through the account linking
 # process and display account info / balance once authenticated

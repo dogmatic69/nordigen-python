@@ -14,7 +14,7 @@ from nordigen.client import (
 from nordigen.oauth import OAuthAuthentication
 
 
-def Client(token=None, request_strategy=None, secret_id=None, secret_key=None, version=None):
+def wrapper(token=None, request_strategy=None, secret_id=None, secret_key=None, version=None):
     if token:
         warnings.warn("Use Client(secret_id=xxx, secret_key=xxx) instead of token", DeprecationWarning)
 

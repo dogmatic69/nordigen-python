@@ -126,6 +126,8 @@ class PremiumClient(NordigenClient):
 
 
 class AgreementsClient(NordigenClient):
+    endpoint = "agreements/enduser"
+
     def list(self, limit=None, offset=None):
         if not self.is_v2():
             raise NotImplementedError()
@@ -133,7 +135,7 @@ class AgreementsClient(NordigenClient):
         url_args = dict(limit=limit, offset=offset)
         url_args = {k: v for k, v in url_args.items() if v}
 
-        url = self.url(fragment="agreements/enduser", url_args=url_args)
+        url = self.url(fragment=self.endpoint, url_args=url_args)
         return self.get(url)
 
     def create(
@@ -145,7 +147,7 @@ class AgreementsClient(NordigenClient):
         access_days=30,
         access_scope=DEFAULT_SCOPE,
     ):
-        url = self.url(fragment="agreements/enduser")
+        url = self.url(fragment=self.endpoint)
 
         if not aspsp_id and not self.is_v2():
             raise ValueError("aspsp_id is required for v1")
@@ -181,19 +183,19 @@ class AgreementsClient(NordigenClient):
         url_args = dict(enduser_id=enduser_id, limit=limit, offset=offset)
         url_args = {k: v for k, v in url_args.items() if v}
 
-        url = self.url(fragment="agreements/enduser", url_args=url_args)
+        url = self.url(fragment=self.endpoint, url_args=url_args)
         return self.get(url)
 
     def by_id(self, id):
-        url = self.url(fragment=f"agreements/enduser/{id}")
+        url = self.url(fragment=f"{self.endpoint}/{id}")
         return self.get(url)
 
     def remove(self, id):
-        url = self.url(fragment=f"agreements/enduser/{id}")
+        url = self.url(fragment=f"{self.endpoint}/{id}")
         return self.delete(url)
 
     def accept(self, id):
-        url = self.url(fragment=f"agreements/enduser/{id}/accept")
+        url = self.url(fragment=f"{self.endpoint}/{id}/accept")
         return self.put(url, {"user_agent": "user-agent", "ip_address": "127.0.0.1"})
 
     def text(self, id):
@@ -201,7 +203,7 @@ class AgreementsClient(NordigenClient):
         if self.is_v2():
             raise NotImplementedError()
 
-        url = self.url(fragment=f"agreements/enduser/{id}/text")
+        url = self.url(fragment=f"{self.endpoint}/{id}/text")
         return self.get(url)
 
 
