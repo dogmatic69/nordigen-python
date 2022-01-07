@@ -1,7 +1,13 @@
-.python
-*egg*
-examples/client.py
-**/__pycache__
+# testing
+coverage.xml
+pytest-report.xml
 .coverage
 htmlcov
+
+# python
+.python
+*egg*
+**/__pycache__
+
+# build
 dist
