@@ -1,36 +1,131 @@
 import unittest
 
-from . import test_client
+from . import test_client, test_client_with_token
+
+
+class TestAgreementsClientV1(unittest.TestCase):
+    def test_by_enduser_id_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.by_enduser_id(enduser_id="foobar-id")
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/agreements/enduser/?enduser_id=foobar-id", params=None
+            )
+
+        expected = "list by enduser_id is not supported in v2, fetch all with AgreementsClient().list()"
+        assert str(warn.warning) == expected
+
+    def test_by_enduser_id_pagination_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.by_enduser_id(enduser_id="foobar-id", limit=1)
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/agreements/enduser/?enduser_id=foobar-id&limit=1", params=None
+            )
+
+        expected = "list by enduser_id is not supported in v2, fetch all with AgreementsClient().list()"
+        assert str(warn.warning) == expected
+
+        with self.assertWarns(DeprecationWarning):
+            client.by_enduser_id(enduser_id="foobar-id", offset=8)
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/agreements/enduser/?enduser_id=foobar-id&offset=8", params=None
+            )
+
+    def test_create_v1(self):
+        client = test_client_with_token().agreements
+        client.create(enduser_id="foobar-id", aspsp_id="fizzbuzz-id", historical_days=45)
+
+        client.request_strategy.post.assert_called_with(
+            "https://ob.nordigen.com/api/agreements/enduser/",
+            data={"max_historical_days": 45, "enduser_id": "foobar-id", "aspsp_id": "fizzbuzz-id"},
+            params=None,
+        )
+
+    def test_text_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.text("foobar-id")
+
+        expected = "AgreementsClient().text() has been removed in V2"
+        assert str(warn.warning) == expected
+
+        client.request_strategy.get.assert_called_with(
+            "https://ob.nordigen.com/api/agreements/enduser/foobar-id/text/", params=None
+        )
+
+    def test_list_not_implemented_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertRaises(NotImplementedError):
+            client.list()
+
+    def test_create_requires_aspsp_id_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertRaises(ValueError):
+            client.create(enduser_id="foobar-id")
 
 
 class TestAgreementsClient(unittest.TestCase):
     def test_by_enduser_id(self):
         client = test_client().agreements
-        client.by_enduser_id(enduser_id="foobar-id")
-        client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/agreements/enduser/?enduser_id=foobar-id", params=None
-        )
+
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.by_enduser_id(enduser_id="foobar-id")
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/v2/agreements/enduser/", params=None
+            )
+        expected = "list by enduser_id is not supported in v2, fetch all with AgreementsClient().list()"
+        assert str(warn.warning) == expected
 
     def test_by_enduser_id_pagination(self):
         client = test_client().agreements
-        client.by_enduser_id(enduser_id="foobar-id", limit=1)
-        client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/agreements/enduser/?enduser_id=foobar-id&limit=1", params=None
-        )
 
-        client.by_enduser_id(enduser_id="foobar-id", offset=5)
-        client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/agreements/enduser/?enduser_id=foobar-id&offset=5", params=None
-        )
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.by_enduser_id(enduser_id="foobar-id", limit=1)
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/v2/agreements/enduser/?limit=1", params=None
+            )
+
+        expected = "list by enduser_id is not supported in v2, fetch all with AgreementsClient().list()"
+        assert str(warn.warning) == expected
+
+        with self.assertWarns(DeprecationWarning):
+            client.by_enduser_id(enduser_id="foobar-id", offset=5)
+            client.request_strategy.get.assert_called_with(
+                "https://ob.nordigen.com/api/v2/agreements/enduser/?offset=5", params=None
+            )
+
+    def test_text_not_implemented(self):
+        client = test_client().agreements
+
+        with self.assertWarns(DeprecationWarning):
+            with self.assertRaises(NotImplementedError):
+                client.text("foobar-id")
 
     def test_create(self):
         client = test_client().agreements
-        client.create(enduser_id="foobar-id", aspsp_id="fizzbuzz-id", historical_days=45)
+        with self.assertWarns(DeprecationWarning) as warn:
+            client.create(enduser_id="foobar-id", aspsp_id="fizzbuzz-id", historical_days=45)
+
         client.request_strategy.post.assert_called_with(
             "https://ob.nordigen.com/api/v2/agreements/enduser/",
-            data={"max_historical_days": 45, "enduser_id": "foobar-id", "aspsp_id": "fizzbuzz-id"},
+            data={
+                "max_historical_days": 45,
+                "access_valid_for_days": 30,
+                "access_scope": ["transactions", "balances", "details"],
+                "enduser_id": "foobar-id",
+                "institution_id": "fizzbuzz-id",
+            },
             params=None,
         )
+
+        expected = "aspsp_id is deprecated in v2"
+        assert str(warn.warning) == expected
 
     def test_by_id(self):
         client = test_client().agreements
@@ -53,11 +148,4 @@ class TestAgreementsClient(unittest.TestCase):
             "https://ob.nordigen.com/api/v2/agreements/enduser/foobar-id/accept/",
             data={"user_agent": "user-agent", "ip_address": "127.0.0.1"},
             params=None,
-        )
-
-    def test_text(self):
-        client = test_client().agreements
-        client.text("foobar-id")
-        client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/agreements/enduser/foobar-id/text/", params=None
         )

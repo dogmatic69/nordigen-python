@@ -16,7 +16,7 @@ flake8:
 
 .PHONY: test
 test:
-	pytest --ignore=examples/
+	pytest --ignore=examples/ -xv
 
 .PHONY: ci
 ci: venv isort black flake8 test

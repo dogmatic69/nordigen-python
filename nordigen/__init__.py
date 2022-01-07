@@ -2,7 +2,15 @@ import warnings
 
 from apiclient import HeaderAuthentication, NoAuthentication
 
-from nordigen.client import AccountClient, AgreementsClient, AspspsClient, AuthClient, RequisitionsClient
+from nordigen.client import (
+    AccountClient,
+    AgreementsClient,
+    AspspsClient,
+    AuthClient,
+    InstitutionsClient,
+    PremiumClient,
+    RequisitionsClient,
+)
 from nordigen.oauth import OAuthAuthentication
 
 
@@ -30,6 +38,8 @@ def Client(token=None, request_strategy=None, secret_id=None, secret_key=None, v
     instance.aspsps = AspspsClient(auth=auth, request_strategy=request_strategy, version=version)
     instance.agreements = AgreementsClient(auth=auth, request_strategy=request_strategy, version=version)
     instance.account = AccountClient(auth=auth, request_strategy=request_strategy, version=version)
+    instance.institutions = InstitutionsClient(auth=auth, request_strategy=request_strategy, version=version)
+    instance.premium = PremiumClient(auth=auth, request_strategy=request_strategy, version=version)
     instance.requisitions = RequisitionsClient(auth=auth, request_strategy=request_strategy, version=version)
 
     return instance
