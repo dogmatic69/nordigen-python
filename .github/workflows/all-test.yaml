@@ -1,0 +1,45 @@
+name: Test Workflow
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        required: true
+        type: string
+      fetch_depth:
+        required: false
+        type: string
+        default: 0
+    secrets:
+      github_token:
+        required: true
+      sonar_token:
+        required: true
+
+jobs:
+  ci_checks:
+    name: Pass input and secrets to my-action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: ${{ inputs.fetch_depth }}
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python_version }}
+      - name: setup
+        run: make install-dev
+      - name: isort
+        run: make isort
+      - name: black
+        run: make black
+      - name: flake8
+        run: make flake8
+      - name: test
+        run: make test
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+          SONAR_TOKEN: ${{ secrets.sonar_token }}
