@@ -41,7 +41,7 @@ install-dev: install-pip
 
 .PHONY: install-publish
 install-publish: install-pip
-	pip install -e ".[deploy]"
+	pip install -e ".[publish]"
 
 .PHONY: publish
 publish: build
