@@ -1,9 +1,22 @@
 # Nordigen API Client
 
-[![GitHub](https://img.shields.io/github/license/dogmatic69/nordigen-python)](LICENSE)
+[![GitHub](https://img.shields.io/github/license/dogmatic69/nordigen-python)](LICENSE.txt)
 [![CodeFactor](https://www.codefactor.io/repository/github/dogmatic69/nordigen-python/badge)](https://www.codefactor.io/repository/github/dogmatic69/nordigen-python)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=alert_status)](https://sonarcloud.io/dashboard?id=dogmatic69_nordigen-python)
-[![CI](https://github.com/dogmatic69/nordigen-python/actions/workflows/master.yaml/badge.svg)](https://github.com/dogmatic69/nordigen-python/actions/workflows/master.yaml)
+[![CI](https://github.com/dogmatic69/nordigen-python/actions/workflows/ci.yaml/badge.svg)](https://github.com/dogmatic69/nordigen-python/actions/workflows/ci.yaml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=bugs)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=dogmatic69_nordigen-python&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=dogmatic69_nordigen-python)
+[![PyPi](https://img.shields.io/pypi/v/nordigen-python.svg)](https://pypi.python.org/pypi/nordigen-python/)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 
 Nordigen is a (always*) free banking API that takes advantage of the EU PSD2
 regulations. They connect to banks in over 30 countries using real banking
