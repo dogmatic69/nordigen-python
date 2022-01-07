@@ -1,0 +1,32 @@
+name: PyPi Publish
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        required: false
+        type: string
+        default: 3.10
+    secrets:
+      pypi_key:
+        required: true
+        description: API token for access to PyPI
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    needs:
+      - all-tests
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ input.python_version }}
+      - name: setup
+        run: make install-publish
+      - name: publish
+        run: make publish
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_key }}

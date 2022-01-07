@@ -8,7 +8,7 @@ test_dependencies = ["pytest", "pytest-env", "pytest-cov", "vcrpy", "requests-mo
 lint_dependencies = ["flake8", "flake8-docstrings", "black", "isort"]
 docs_dependencies = []
 dev_dependencies = test_dependencies + lint_dependencies + docs_dependencies + ["ipdb"]
-deploy_dependencies = ["requests", "twine"]
+publish_dependencies = ["requests", "twine"]
 
 
 with open("README.md", "r") as fh:
@@ -46,7 +46,7 @@ setuptools.setup(
         "lint": lint_dependencies,
         "docs": dev_dependencies,
         "dev": dev_dependencies,
-        "deploy": deploy_dependencies,
+        "publish": publish_dependencies,
     },
     include_package_data=True,
     zip_safe=False,

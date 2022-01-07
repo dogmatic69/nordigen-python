@@ -39,12 +39,12 @@ install-pip: venv
 install-dev: install-pip
 	pip install -e ".[dev]"
 
-.PHONY: install-deploy
-install-deploy: install-pip
+.PHONY: install-publish
+install-publish: install-pip
 	pip install -e ".[deploy]"
 
-.PHONY: deploy
-deploy: build
+.PHONY: publish
+publish: build
 	twine upload --verbose dist/*
 
 .PHONY: venv
