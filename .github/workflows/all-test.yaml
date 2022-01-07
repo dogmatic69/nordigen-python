@@ -11,9 +11,9 @@ on:
         type: string
         default: 0
     secrets:
-      github_token:
+      github_key:
         required: true
-      sonar_token:
+      sonar_key:
         required: true
 
 jobs:
