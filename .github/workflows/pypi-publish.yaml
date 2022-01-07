@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python Version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ input.python_version }}
+          python-version: ${{ inputs.python_version }}
       - name: setup
         run: make install-publish
       - name: publish
