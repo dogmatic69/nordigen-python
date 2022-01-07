@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 from apiclient.request_strategies import BaseRequestStrategy
 
-from nordigen import Client
+from nordigen import wrapper as Client
 
 
 def test_client(

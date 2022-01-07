@@ -52,9 +52,9 @@ Some more in-depth working examples can be found in `./examples`. Also check out
 Create a client instance
 
 ```
-from nordigen import Client
+from nordigen import wrapper
 
-client = Client(token="super-secret-token")
+client = wrapper(token="super-secret-token")
 ```
 
 Listing available banks
