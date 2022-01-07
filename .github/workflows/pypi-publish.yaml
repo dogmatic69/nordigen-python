@@ -23,6 +23,12 @@ jobs:
       remote-version: ${{ steps.remote-version.outputs.version }}
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python_version }}
+      - name: PyPi CLI
+        run: pip install pypi-cli
       - id: local-version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: remote-version
