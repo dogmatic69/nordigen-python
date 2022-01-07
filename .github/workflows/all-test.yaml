@@ -3,9 +3,6 @@ name: Test Workflow
 on:
   workflow_call:
     inputs:
-      python_version:
-        required: true
-        type: string
       fetch_depth:
         required: false
         type: string
@@ -17,9 +14,12 @@ on:
         required: true
 
 jobs:
-  ci_checks:
+  checks:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.8, 3.9, 3.10]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -27,7 +27,7 @@ jobs:
       - name: Set up Python Version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
+          python-version: ${{ matrix.python }}
       - name: setup
         run: make install-dev
       - name: isort
@@ -39,6 +39,7 @@ jobs:
       - name: test
         run: make test
       - name: SonarCloud Scan
+        if: matrix.python == '3.10'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.github_key }}
