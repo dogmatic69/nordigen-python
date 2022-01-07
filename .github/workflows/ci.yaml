@@ -22,6 +22,7 @@ jobs:
       - all-tests
     with:
       python_version: '3.10'
+      package_name: 'nordigen-python'
     secrets:
       pypi_key: ${{ secrets.PYPI_TOKEN }}
 
