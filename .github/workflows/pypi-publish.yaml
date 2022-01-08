@@ -26,23 +26,35 @@ jobs:
       - name: Set up Python Version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
-      - name: PyPi CLI
-        run: pip install pypi-cli
+          python-version: '3.10'
+      - run: |
+          pip install packaging
       - id: local-version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: remote-version
-        run: echo "::set-output name=version::$(pypi info ${{ inputs.package_name }} | grep Latest | awk '{print $3}')"
-      - name: Version Info
+        run: echo "::set-output name=version::$(curl -s -o - 'https://pypi.org/pypi/${{ inputs.package_name }}/json' | jq -r '.releases|keys[-1]')"
+      - id: version-check
+        shell: python
+        env:
+          REMOTE_VERSION: ${{ steps.remote-version.outputs.version }}
+          LOCAL_VERSION: ${{ steps.local-version.outputs.version }}
         run: |
-          echo "Local Version: ${{ steps.local-version.outputs.version }}"
-          echo "Remote Version: ${{ steps.remote-version.outputs.version }}"
+          import os
+          from packaging import version
+
+          local = version.parse(os.environ['LOCAL_VERSION'])
+          remote = version.parse(os.environ['REMOTE_VERSION'])
+
+          print(f"Local Version: {local}")
+          print(f"Remote Version: {remote}")
+
+          print(f"::set-output name=needs-publish::{int(local > remote)}")
 
   publish-package:
     runs-on: ubuntu-latest
     needs:
       - version
-    if: needs.version.outputs.local-version != needs.version.outputs.remote-version
+    if: needs.version-check.outputs.needs-publish
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python Version
