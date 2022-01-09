@@ -47,6 +47,7 @@ jobs:
 
           print(f"Local Version: {local}")
           print(f"Remote Version: {remote}")
+          print(f"Requires Publish: {int(local > remote)}")
 
           print(f"::set-output name=needs-publish::{int(local > remote)}")
 
