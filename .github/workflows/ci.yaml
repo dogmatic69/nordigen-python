@@ -14,6 +14,8 @@ jobs:
     secrets:
       github_key: ${{ secrets.GITHUB_TOKEN }}
       sonar_key: ${{ secrets.SONAR_TOKEN }}
+      sandbox_secret_id: ${{ secrets.NORDIGEN_SANDBOX_SECRET_ID }}
+      sandbox_secret_key: ${{ secrets.NORDIGEN_SANDBOX_SECRET_KEY }}
 
   publish:
     uses: dogmatic69/nordigen-python/.github/workflows/pypi-publish.yaml@master
