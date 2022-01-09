@@ -12,11 +12,18 @@ on:
         required: true
       sonar_key:
         required: true
+      sandbox_secret_id:
+        required: false
+      sandbox_secret_key:
+        required: false
 
 jobs:
   checks:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
+    env:
+      NORDIGEN_SANDBOX_SECRET_ID: ${{ secrets.sandbox_secret_id }}
+      NORDIGEN_SANDBOX_SECRET_KEY: ${{ secrets.sandbox_secret_key }}
     strategy:
       matrix:
         python:
