@@ -47,6 +47,18 @@ class TestRequisitionsClientV1(unittest.TestCase):
             with self.assertRaises(ValueError):
                 client.create(redirect=None, reference=None)
 
+    def test_initiate_v1(self):
+        client = test_client_with_token().requisitions
+
+        client.initiate("foobar-id", "aspsp_id")
+        client.request_strategy.post.assert_called_with(
+            "https://ob.nordigen.com/api/requisitions/foobar-id/links/",
+            data={
+                "aspsp_id": "aspsp_id",
+            },
+            params=None,
+        )
+
 
 class TestRequisitionsClient(unittest.TestCase):
     @patch("nordigen.client.RequisitionsClient.create_v2")
@@ -89,6 +101,12 @@ class TestRequisitionsClient(unittest.TestCase):
             },
             params=None,
         )
+
+    def test_initiate_not_implemented_v2(self):
+        client = test_client().requisitions
+
+        with self.assertRaises(NotImplementedError):
+            client.initiate("foobar-id", "aspsp_id")
 
     def test_create_v2_options(self):
         client = test_client().requisitions
@@ -148,16 +166,4 @@ class TestRequisitionsClient(unittest.TestCase):
         client.remove("foobar-id")
         client.request_strategy.delete.assert_called_with(
             "https://ob.nordigen.com/api/v2/requisitions/foobar-id/", params=None
-        )
-
-    def test_initiate(self):
-        client = test_client().requisitions
-
-        client.initiate("foobar-id", "aspsp_id")
-        client.request_strategy.post.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/foobar-id/links/",
-            data={
-                "aspsp_id": "aspsp_id",
-            },
-            params=None,
         )

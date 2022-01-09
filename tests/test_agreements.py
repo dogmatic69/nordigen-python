@@ -44,6 +44,12 @@ class TestAgreementsClientV1(unittest.TestCase):
             params=None,
         )
 
+    def test_create_without_enduser_id_v1(self):
+        client = test_client_with_token().agreements
+
+        with self.assertRaises(ValueError):
+            client.create(aspsp_id="foobar-id")
+
     def test_text_v1(self):
         client = test_client_with_token().agreements
 
@@ -110,7 +116,7 @@ class TestAgreementsClient(unittest.TestCase):
     def test_create(self):
         client = test_client().agreements
         with self.assertWarns(DeprecationWarning) as warn:
-            client.create(enduser_id="foobar-id", aspsp_id="fizzbuzz-id", historical_days=45)
+            client.create(aspsp_id="fizzbuzz-id", historical_days=45)
 
         client.request_strategy.post.assert_called_with(
             "https://ob.nordigen.com/api/v2/agreements/enduser/",
@@ -118,7 +124,6 @@ class TestAgreementsClient(unittest.TestCase):
                 "max_historical_days": 45,
                 "access_valid_for_days": 30,
                 "access_scope": ["transactions", "balances", "details"],
-                "enduser_id": "foobar-id",
                 "institution_id": "fizzbuzz-id",
             },
             params=None,
@@ -126,6 +131,18 @@ class TestAgreementsClient(unittest.TestCase):
 
         expected = "aspsp_id is deprecated in v2"
         assert str(warn.warning) == expected
+
+    def test_create_with_enduser_raises_exception_id(self):
+        client = test_client().agreements
+
+        with self.assertRaises(ValueError):
+            client.create(enduser_id="foobar-id")
+
+    def test_create_with_no_args_raises_exception(self):
+        client = test_client().agreements
+
+        with self.assertRaises(ValueError):
+            client.create()
 
     def test_by_id(self):
         client = test_client().agreements

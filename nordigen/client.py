@@ -138,9 +138,27 @@ class AgreementsClient(NordigenClient):
         url = self.url(fragment=self.endpoint, url_args=url_args)
         return self.get(url)
 
+    def _create_data_v2(self, aspsp_id, enduser_id, institution_id, access_scope, historical_days, access_days):
+        if aspsp_id:
+            warnings.warn("aspsp_id is deprecated in v2", DeprecationWarning)
+
+        if enduser_id:
+            raise ValueError("enduser_id is not required for v2")
+
+        institution_id = institution_id or aspsp_id
+        if not institution_id:
+            raise ValueError("institution_id is required for v2")
+
+        return {
+            "max_historical_days": historical_days,
+            "access_valid_for_days": access_days,
+            "access_scope": access_scope,
+            "institution_id": institution_id,
+        }
+
     def create(
         self,
-        enduser_id,
+        enduser_id=None,
         aspsp_id=None,
         institution_id=None,
         historical_days=30,
@@ -152,6 +170,9 @@ class AgreementsClient(NordigenClient):
         if not aspsp_id and not self.is_v2():
             raise ValueError("aspsp_id is required for v1")
 
+        if not enduser_id and not self.is_v2():
+            raise ValueError("enduser_id is required for v1")
+
         data = {
             "max_historical_days": historical_days,
             "enduser_id": enduser_id,
@@ -159,17 +180,14 @@ class AgreementsClient(NordigenClient):
         }
 
         if self.is_v2():
-            if aspsp_id:
-                warnings.warn("aspsp_id is deprecated in v2", DeprecationWarning)
-
-            institution_id = institution_id or aspsp_id
-            data = {
-                "max_historical_days": historical_days,
-                "access_valid_for_days": access_days,
-                "access_scope": access_scope,
-                "enduser_id": enduser_id,
-                "institution_id": institution_id,
-            }
+            data = self._create_data_v2(
+                aspsp_id=aspsp_id,
+                enduser_id=enduser_id,
+                institution_id=institution_id,
+                access_scope=access_scope,
+                historical_days=historical_days,
+                access_days=access_days,
+            )
 
         return self.post(url, data=data)
 
@@ -301,6 +319,9 @@ class RequisitionsClient(NordigenClient):
         return self.post(url, data=data)
 
     def initiate(self, id, aspsp_id):
+        if self.is_v2():
+            raise NotImplementedError()
+
         url = self.url(fragment=f"requisitions/{id}/links")
         return self.post(
             url,

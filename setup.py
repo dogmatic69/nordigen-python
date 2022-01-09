@@ -4,7 +4,9 @@ import setuptools
 
 application_dependencies = ["api-client>=1.3.1"]
 prod_dependencies = []
-test_dependencies = ["pytest", "pytest-env", "pytest-cov", "vcrpy", "requests-mock"]
+test_dependencies = [
+    "pytest", "pytest-env", "pytest-cov", "vcrpy", "requests-mock", "pytest-order",
+    "requests_html", "bs4"]
 lint_dependencies = ["flake8", "flake8-docstrings", "black", "isort"]
 docs_dependencies = []
 dev_dependencies = test_dependencies + lint_dependencies + docs_dependencies + ["ipdb"]
@@ -28,7 +30,7 @@ setuptools.setup(
     author="Carl Sutton (dogmatic69)",
     author_email="dogmatic69@gmail.com",
     license='MIT',
-    keywords = ['nordigen', 'banking', 'PSD2'],
+    keywords=['nordigen', 'banking', 'PSD2'],
     url="https://github.com/dogmatic69/nordigen-python",
     python_requires=">=3.6",
     packages=["nordigen"],
