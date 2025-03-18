@@ -25,9 +25,7 @@
 
 ## Compatibility
 [![PyPi](https://img.shields.io/pypi/v/nordigen-python.svg)](https://pypi.python.org/pypi/nordigen-python/)
-[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
 Nordigen is a (always*) free banking API that takes advantage of the EU PSD2
 regulations. They connect to banks in over 30 countries using real banking
@@ -45,10 +43,13 @@ _\* According to Nordigen's own website :)_
 
 ## Nordigen Info
 
+Note:  Nordigen was purchased by GoCardless in 2022. The API is still free to use, but
+the company is now called GoCardless. The API is still the same, but the branding has changed.
+
 - Sales pitch: https://nordigen.com/en/products/account-information/
 - Docs: https://nordigen.com/en/account_information_documenation/api-documention/overview/
-- API Spec: https://ob.nordigen.com/api/docs
-- OpenAPI Specification: https://ob.nordigen.com/api/swagger.json
+- API Spec: https://bankaccountdata.gocardless.com/api/docs
+- OpenAPI Specification: https://bankaccountdata.gocardless.com/api/swagger.json
 
 ## Installation
 

@@ -1,11 +1,11 @@
 import unittest
 
-from . import test_client_with_token
+from . import _test_client_with_token
 
 
 class TestAspspsClient(unittest.TestCase):
     def test_by_country_v1(self):
-        client = test_client_with_token().aspsps
+        client = _test_client_with_token().aspsps
 
         with self.assertWarns(DeprecationWarning) as warn:
             client.by_country("SE")
@@ -13,10 +13,10 @@ class TestAspspsClient(unittest.TestCase):
         expected = "AspspsClient() has been replaced by InstitutionsClient() in V2"
         assert str(warn.warning) == expected
 
-        client.request_strategy.get.assert_called_with("https://ob.nordigen.com/api/aspsps/?country=SE", params=None)
+        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/aspsps/?country=SE", params=None)
 
     def test_by_id_v1(self):
-        client = test_client_with_token().aspsps
+        client = _test_client_with_token().aspsps
 
         with self.assertWarns(DeprecationWarning) as warn:
             client.by_id("foo-bar-id")
@@ -24,4 +24,4 @@ class TestAspspsClient(unittest.TestCase):
         expected = "AspspsClient() has been replaced by InstitutionsClient() in V2"
         assert str(warn.warning) == expected
 
-        client.request_strategy.get.assert_called_with("https://ob.nordigen.com/api/aspsps/foo-bar-id/", params=None)
+        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/aspsps/foo-bar-id/", params=None)

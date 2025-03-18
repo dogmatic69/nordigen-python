@@ -27,8 +27,7 @@ jobs:
     strategy:
       matrix:
         python:
-          - '3.9'
-          - '3.10'
+          - '3.11'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -48,7 +47,7 @@ jobs:
       - name: test
         run: make test
       - name: SonarCloud Scan
-        if: matrix.python == '3.10'
+        if: matrix.python == '3.11'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.github_key }}

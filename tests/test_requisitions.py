@@ -1,12 +1,12 @@
 import unittest
 from unittest.mock import patch
 
-from . import test_client, test_client_with_token
+from . import _test_client, _test_client_with_token
 
 
 class TestRequisitionsClientV1(unittest.TestCase):
     def test_create_v1(self):
-        client = test_client_with_token().requisitions
+        client = _test_client_with_token().requisitions
 
         with self.assertWarns(DeprecationWarning) as warn:
             client.create(
@@ -23,7 +23,7 @@ class TestRequisitionsClientV1(unittest.TestCase):
         assert str(warn.warning) == expected
 
         client.request_strategy.post.assert_called_with(
-            "https://ob.nordigen.com/api/requisitions/",
+            "https://bankaccountdata.gocardless.com/api/requisitions/",
             data={
                 "redirect": "redirect",
                 "agreements": "agreements",
@@ -35,24 +35,24 @@ class TestRequisitionsClientV1(unittest.TestCase):
         )
 
     def test_create_v2_not_implemented(self):
-        client = test_client_with_token().requisitions
+        client = _test_client_with_token().requisitions
 
         with self.assertRaises(NotImplementedError):
             client.create_v2(redirect=None, institution_id=None, reference=None)
 
     def test_create_without_aspsp_id_value_error(self):
-        client = test_client_with_token().requisitions
+        client = _test_client_with_token().requisitions
 
         with self.assertWarns(DeprecationWarning):
             with self.assertRaises(ValueError):
                 client.create(redirect=None, reference=None)
 
     def test_initiate_v1(self):
-        client = test_client_with_token().requisitions
+        client = _test_client_with_token().requisitions
 
         client.initiate("foobar-id", "aspsp_id")
         client.request_strategy.post.assert_called_with(
-            "https://ob.nordigen.com/api/requisitions/foobar-id/links/",
+            "https://bankaccountdata.gocardless.com/api/requisitions/foobar-id/links/",
             data={
                 "aspsp_id": "aspsp_id",
             },
@@ -63,7 +63,7 @@ class TestRequisitionsClientV1(unittest.TestCase):
 class TestRequisitionsClient(unittest.TestCase):
     @patch("nordigen.client.RequisitionsClient.create_v2")
     def test_create_calls_create_v2(self, mocked_v2):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         with self.assertWarns(DeprecationWarning) as warn:
             client.create(
@@ -82,7 +82,7 @@ class TestRequisitionsClient(unittest.TestCase):
         )
 
     def test_create_v2_defaults(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         client.create_v2(
             **{
@@ -92,7 +92,7 @@ class TestRequisitionsClient(unittest.TestCase):
             }
         )
         client.request_strategy.post.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/",
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/",
             data={
                 "redirect": "redirect",
                 "institution_id": "institution_id",
@@ -103,13 +103,13 @@ class TestRequisitionsClient(unittest.TestCase):
         )
 
     def test_initiate_not_implemented_v2(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         with self.assertRaises(NotImplementedError):
             client.initiate("foobar-id", "aspsp_id")
 
     def test_create_v2_options(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         client.create_v2(
             **{
@@ -123,7 +123,7 @@ class TestRequisitionsClient(unittest.TestCase):
             }
         )
         client.request_strategy.post.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/",
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/",
             data={
                 "redirect": "redirect",
                 "institution_id": "institution_id",
@@ -137,33 +137,33 @@ class TestRequisitionsClient(unittest.TestCase):
         )
 
     def test_list(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         client.list()
-        client.request_strategy.get.assert_called_with("https://ob.nordigen.com/api/v2/requisitions/", params=None)
+        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/v2/requisitions/", params=None)
 
         client.list(limit=1)
         client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/?limit=1", params=None
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/?limit=1", params=None
         )
 
         client.list(offset=5)
         client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/?offset=5", params=None
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/?offset=5", params=None
         )
 
     def test_by_id(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         client.by_id("foobar-id")
         client.request_strategy.get.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/foobar-id/", params=None
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/foobar-id/", params=None
         )
 
     def test_remove(self):
-        client = test_client().requisitions
+        client = _test_client().requisitions
 
         client.remove("foobar-id")
         client.request_strategy.delete.assert_called_with(
-            "https://ob.nordigen.com/api/v2/requisitions/foobar-id/", params=None
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/foobar-id/", params=None
         )
