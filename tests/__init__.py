@@ -6,7 +6,7 @@ from apiclient.request_strategies import BaseRequestStrategy
 from nordigen import wrapper as Client
 
 
-def test_client(
+def _test_client(
     token=None,
     request_strategy=Mock(spec=BaseRequestStrategy),
     secret_id="secret-id",
@@ -21,7 +21,7 @@ def test_client(
     return Client(**args)
 
 
-def test_client_with_token(
+def _test_client_with_token(
     token="token",
     request_strategy=Mock(spec=BaseRequestStrategy),
 ):

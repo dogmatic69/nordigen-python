@@ -36,33 +36,33 @@ class TestBaseUrl(unittest.TestCase):
         client = NordigenClient(auth=None, scheme="sftp")
 
         result = client.url("foo")
-        self.assertEqual(result, "sftp://ob.nordigen.com/api/v2/foo/")
+        self.assertEqual(result, "sftp://bankaccountdata.gocardless.com/api/v2/foo/")
 
     def test_url_base(self):
         client = NordigenClient(auth=None, base="")
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/v2/foo/")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/v2/foo/")
 
         client = NordigenClient(auth=None, base="/some/thing/here")
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/some/thing/here/v2/foo/")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/some/thing/here/v2/foo/")
 
     def test_url_basic(self):
         client = NordigenClient(auth=None)
 
         result = client.url("foo")
-        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/api/v2/foo/")
 
         result = client.url("foo/bar")
-        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/bar/")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/api/v2/foo/bar/")
 
     def test_url_args(self):
         client = NordigenClient(auth=None)
 
         result = client.url("foo", url_args={})
-        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/api/v2/foo/")
 
         result = client.url("foo", url_args={"fizz": "buzz"})
-        self.assertEqual(result, "https://ob.nordigen.com/api/v2/foo/?fizz=buzz")
+        self.assertEqual(result, "https://bankaccountdata.gocardless.com/api/v2/foo/?fizz=buzz")
