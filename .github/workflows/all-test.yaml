@@ -18,6 +18,18 @@ on:
         required: false
 
 jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.sonar_key }}
+
   checks:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
@@ -46,9 +58,3 @@ jobs:
         run: make flake8
       - name: test
         run: make test
-      - name: SonarCloud Scan
-        if: matrix.python == '3.11'
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_key }}
-          SONAR_TOKEN: ${{ secrets.sonar_key }}
