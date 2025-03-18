@@ -22,7 +22,8 @@ class TestAgreementsClientV1(unittest.TestCase):
         with self.assertWarns(DeprecationWarning) as warn:
             client.by_enduser_id(enduser_id="foobar-id", limit=1)
             client.request_strategy.get.assert_called_with(
-                "https://bankaccountdata.gocardless.com/api/agreements/enduser/?enduser_id=foobar-id&limit=1", params=None
+                "https://bankaccountdata.gocardless.com/api/agreements/enduser/?enduser_id=foobar-id&limit=1",
+                params=None,
             )
 
         expected = "list by enduser_id is not supported in v2, fetch all with AgreementsClient().list()"
@@ -31,7 +32,8 @@ class TestAgreementsClientV1(unittest.TestCase):
         with self.assertWarns(DeprecationWarning):
             client.by_enduser_id(enduser_id="foobar-id", offset=8)
             client.request_strategy.get.assert_called_with(
-                "https://bankaccountdata.gocardless.com/api/agreements/enduser/?enduser_id=foobar-id&offset=8", params=None
+                "https://bankaccountdata.gocardless.com/api/agreements/enduser/?enduser_id=foobar-id&offset=8",
+                params=None,
             )
 
     def test_create_v1(self):

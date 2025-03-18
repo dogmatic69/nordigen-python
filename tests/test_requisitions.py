@@ -140,7 +140,9 @@ class TestRequisitionsClient(unittest.TestCase):
         client = _test_client().requisitions
 
         client.list()
-        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/v2/requisitions/", params=None)
+        client.request_strategy.get.assert_called_with(
+            "https://bankaccountdata.gocardless.com/api/v2/requisitions/", params=None
+        )
 
         client.list(limit=1)
         client.request_strategy.get.assert_called_with(

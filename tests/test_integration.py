@@ -152,7 +152,8 @@ class TestIntegrationRequisitions(unittest.TestCase):
         self.assertEqual(response["status"], "CR")
         self.assertEqual(response["accounts"], [])
         self.assertEqual(
-            response["link"], f"https://bankaccountdata.gocardless.com/psd2/start/{response['id']}/SANDBOXFINANCE_SFIN0000"
+            response["link"],
+            f"https://bankaccountdata.gocardless.com/psd2/start/{response['id']}/SANDBOXFINANCE_SFIN0000",
         )
         self.assertEqual(response["ssn"], None)
 

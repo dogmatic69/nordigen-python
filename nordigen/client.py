@@ -22,7 +22,15 @@ def next_page_by_url(response, previous_page_url):
 
 
 class NordigenClient(APIClient):
-    def __init__(self, auth, scheme="https", host="bankaccountdata.gocardless.com", base="/api", request_strategy=None, version="v2"):
+    def __init__(
+        self,
+        auth,
+        scheme="https",
+        host="bankaccountdata.gocardless.com",
+        base="/api",
+        request_strategy=None,
+        version="v2",
+    ):
         """Nordigen client base class.
 
         Args:

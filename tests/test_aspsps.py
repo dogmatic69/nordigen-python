@@ -13,7 +13,9 @@ class TestAspspsClient(unittest.TestCase):
         expected = "AspspsClient() has been replaced by InstitutionsClient() in V2"
         assert str(warn.warning) == expected
 
-        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/aspsps/?country=SE", params=None)
+        client.request_strategy.get.assert_called_with(
+            "https://bankaccountdata.gocardless.com/api/aspsps/?country=SE", params=None
+        )
 
     def test_by_id_v1(self):
         client = _test_client_with_token().aspsps
@@ -24,4 +26,6 @@ class TestAspspsClient(unittest.TestCase):
         expected = "AspspsClient() has been replaced by InstitutionsClient() in V2"
         assert str(warn.warning) == expected
 
-        client.request_strategy.get.assert_called_with("https://bankaccountdata.gocardless.com/api/aspsps/foo-bar-id/", params=None)
+        client.request_strategy.get.assert_called_with(
+            "https://bankaccountdata.gocardless.com/api/aspsps/foo-bar-id/", params=None
+        )
