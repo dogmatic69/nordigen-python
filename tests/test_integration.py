@@ -104,7 +104,7 @@ class TestIntegrationAgreements(unittest.TestCase):
         self.assertEqual(result["max_historical_days"], 43)
         self.assertEqual(result["access_valid_for_days"], 34)
         self.assertEqual(result["access_scope"], ["balances", "details", "transactions"])
-        self.assertTrue(result["accepted"] is None)
+        self.assertIsNone(result["accepted"])
         self.assertEqual(result["institution_id"], "SANDBOXFINANCE_SFIN0000")
 
     @pytest.mark.order(after="TestIntegrationAgreements::test_get_agreement_by_id")
@@ -155,7 +155,7 @@ class TestIntegrationRequisitions(unittest.TestCase):
             response["link"],
             f"https://bankaccountdata.gocardless.com/psd2/start/{response['id']}/SANDBOXFINANCE_SFIN0000",
         )
-        self.assertEqual(response["ssn"], None)
+        self.assertIsNone(response["ssn"])
 
     def test_requisition_by_id(self):
         c = client()
@@ -302,7 +302,7 @@ class TestIntegrationFullFlow(unittest.TestCase):
             account_id = result["accounts"][0]
 
             self.assertEqual(result["status"], "LN")  # Requisition is now linked
-            self.assertTrue(len(result["accounts"]) > 0)
+            self.assertGreater(len(result["accounts"]), 0)
 
             # 5b. Fetch account details and transactions
             result = c.account.info(account_id)
@@ -310,13 +310,13 @@ class TestIntegrationFullFlow(unittest.TestCase):
 
             result = c.account.balances(account_id)
             self.assertEqual(len(result["balances"]), 2)
-            self.assertTrue(float(result["balances"][0]["balanceAmount"]["amount"]) > 0)
+            self.assertGreater(float(result["balances"][0]["balanceAmount"]["amount"]), 0)
 
             result = c.account.details(account_id)
-            self.assertTrue(len(result["account"]["ownerName"]) > 0)
+            self.assertGreater(len(result["account"]["ownerName"]), 0)
             self.assertEqual(len(result["account"]["iban"]), 19)
 
             result = c.account.transactions(account_id)
-            self.assertTrue(len(result["transactions"]["booked"]) > 10)
+            self.assertGreater(len(result["transactions"]["booked"]), 10)
             self.assertTrue(result["transactions"]["booked"][0]["transactionAmount"]["amount"])
-            self.assertTrue(len(result["transactions"]["booked"][0]["transactionAmount"]["currency"]) == 3)
+            self.assertEqual(len(result["transactions"]["booked"][0]["transactionAmount"]["currency"]), 3)
