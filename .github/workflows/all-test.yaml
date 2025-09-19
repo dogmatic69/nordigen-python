@@ -33,7 +33,7 @@ jobs:
         with:
           fetch-depth: ${{ inputs.fetch_depth }}
       - name: Set up Python Version
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - name: setup
